@@ -7,7 +7,7 @@ public static class MyUtils
     public static Vector3 GetMouseWorldPosition()
     {
         Vector3 vec = GetMouseWorldPositionWithY(Input.mousePosition, Camera.main);
-        vec.y = 0f;
+        vec.y = 1f;
         return vec;
     }
 

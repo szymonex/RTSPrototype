@@ -5,10 +5,13 @@ public class UnitRTS : MonoBehaviour
     [SerializeField] private GameObject selectedGameObject;
     public Vector3 destinationPoint;
     public bool hasNewDestinationPoint = false;
-    Vector3 nextPoint;
     public bool canMove = false;
-    Pathfinding pathfinding;
-    [SerializeField] private float speed = 3f;
+    private Vector3 nextPoint;
+    private bool isPointAchieved = true;
+    public Pathfinding pathfinding;
+    [SerializeField] private float speed = 5f;
+    public Vector3 offsetFroSelectionCenter;
+    private int pathCount = -1;
 
     private void Awake()
     {
@@ -20,9 +23,16 @@ public class UnitRTS : MonoBehaviour
     {
         if (hasNewDestinationPoint)
         {
-            pathfinding.SetTargetPoint(destinationPoint);
+            pathfinding.SetTargetPoint(destinationPoint + offsetFroSelectionCenter);
             hasNewDestinationPoint = false;
-            canMove = true;
+        }
+        if (canMove)
+        {
+            if (isPointAchieved && pathCount < pathfinding.pathWorldPoints.Count - 1)
+            {
+                NextPoint();
+            }
+            MoveUnitRTS();
         }
     }
 
@@ -31,9 +41,29 @@ public class UnitRTS : MonoBehaviour
         selectedGameObject.SetActive(visible);
     }
 
-    private void MoveToNextPoint()
+    private void NextPoint()
+    {
+        pathCount++;
+        //Debug.Log("pathWorldPoints.Count " + pathfinding.pathWorldPoints.Count);
+        nextPoint = pathfinding.pathWorldPoints[pathCount];
+        nextPoint.y = 1f;
+        isPointAchieved = false;
+    }
+
+    private void MoveUnitRTS()
     {
         Vector3 targetPosition = nextPoint - transform.position;
-        transform.position += targetPosition * speed * Time.deltaTime;
+
+        //transform.position += new Vector3(targetPosition.x * speed * Time.deltaTime, 0f, targetPosition.z * speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, nextPoint, 0.1f);
+
+        if(Vector3.Distance(gameObject.transform.position, nextPoint) < 0.1f || hasNewDestinationPoint)
+        {
+            isPointAchieved = true;
+        }
+        if(Vector3.Distance(gameObject.transform.position, destinationPoint) < 0.1f)
+        {
+            canMove = false;
+        }
     }
 }

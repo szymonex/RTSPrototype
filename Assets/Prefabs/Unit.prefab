@@ -100,6 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedGameObject: {fileID: 9174328519691116665}
   destinationPoint: {x: 0, y: 0, z: 0}
+  hasNewDestinationPoint: 0
+  canMove: 0
+  pathfinding: {fileID: 0}
+  speed: 5
 --- !u!136 &6023352271602431741
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -128,6 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seeker: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
+  pathWorldPoints: []
+  grid: {fileID: 0}
 --- !u!1 &9174328519691116665
 GameObject:
   m_ObjectHideFlags: 0

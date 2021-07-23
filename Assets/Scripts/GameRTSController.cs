@@ -54,6 +54,7 @@ public class GameRTSController : MonoBehaviour
                 if (unitRTS != null)
                 {
                     unitRTS.SetSelectedVisible(true);
+                    unitRTS.offsetFroSelectionCenter = UnitRTSOffsetFroSelectionCenter(unitRTS.transform.position);
                     selectedUnitsRTSList.Add(unitRTS);
                 }
             }
@@ -66,11 +67,17 @@ public class GameRTSController : MonoBehaviour
                 var orderToMovePoint = MyUtils.GetMouseWorldPosition();
                 foreach (UnitRTS unitRTS in selectedUnitsRTSList)
                 {
-                    unitRTS.destinationPoint = orderToMovePoint;
                     unitRTS.hasNewDestinationPoint = true;
+                    unitRTS.destinationPoint = orderToMovePoint;
                 }
-                Debug.Log(orderToMovePoint);
+                //Debug.Log(orderToMovePoint);
             }
         }
+    }
+    public Vector3 UnitRTSOffsetFroSelectionCenter(Vector3 unitPos)
+    {
+        var offset = Box.Center - unitPos;
+        offset.y = 0f;
+        return offset;
     }
 }

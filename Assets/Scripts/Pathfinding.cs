@@ -8,26 +8,30 @@ public class Pathfinding : MonoBehaviour
     public Vector3 target;
     bool isTarget = false;
     public List<Node> path;
+    public List<Vector3> pathWorldPoints;
+    private UnitRTS unitRTS;
 
-    MyGrid grid;
+    [SerializeField] private MyGrid grid;
 
     private void Awake()
     {
-        target = new Vector3();
-        grid = GetComponent<MyGrid>();
+        //target = new Vector3();
+        //grid = GetComponent<MyGrid>();
         seeker = gameObject.transform;
+        unitRTS = GetComponent<UnitRTS>();
     }
 
     private void Update()
     {
         if(isTarget)
         {
-            FindPath(seeker.position, target);
+            FindPath(seeker.transform.position, target);
         }      
     }
 
     public void SetTargetPoint(Vector3 target)
     {
+        //Vector3 targetWithY = new Vector3(target.x, 1f, target.z);
         this.target = target;
         isTarget = true;
     }
@@ -99,7 +103,22 @@ public class Pathfinding : MonoBehaviour
         path.Reverse();
 
         this.path = path;
-        //grid.path = path;
+        grid.path = path;
+        PathNodesToWorldPoints(path);
+    }
+
+    void PathNodesToWorldPoints(List<Node> pathNode)
+    {
+        foreach(Node node in pathNode)
+        {
+            pathWorldPoints.Add(node.worldPosition);
+        }
+        PassPathToUnit(); ////
+    }
+
+    public void PassPathToUnit()
+    {
+        unitRTS.canMove = true;
     }
 
     int GetDistance(Node nodeA, Node nodeB) // hCost
