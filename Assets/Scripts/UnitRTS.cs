@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class UnitRTS : MonoBehaviour
 {
-    [SerializeField] private GameObject selectedGameObject;
     public Vector3 destinationPoint;
     public bool hasNewDestinationPoint = false;
     public bool canMove = false;
+    public Pathfinding pathfinding;
+    public float speed = 0.01f;
+    public Vector3 offsetFroSelectionCenter;
     private Vector3 nextPoint;
     private bool isPointAchieved = true;
-    public Pathfinding pathfinding;
-    [SerializeField] private float speed = 5f;
-    public Vector3 offsetFroSelectionCenter;
     private int pathCount = -1;
+    [SerializeField] private GameObject selectedGameObject;
 
     private void Awake()
     {
@@ -44,7 +44,6 @@ public class UnitRTS : MonoBehaviour
     private void NextPoint()
     {
         pathCount++;
-        //Debug.Log("pathWorldPoints.Count " + pathfinding.pathWorldPoints.Count);
         nextPoint = pathfinding.pathWorldPoints[pathCount];
         nextPoint.y = 1f;
         isPointAchieved = false;
@@ -53,9 +52,7 @@ public class UnitRTS : MonoBehaviour
     private void MoveUnitRTS()
     {
         Vector3 targetPosition = nextPoint - transform.position;
-
-        //transform.position += new Vector3(targetPosition.x * speed * Time.deltaTime, 0f, targetPosition.z * speed * Time.deltaTime);
-        transform.position = Vector3.MoveTowards(transform.position, nextPoint, 0.1f);
+        transform.position = Vector3.MoveTowards(transform.position, nextPoint, speed);
 
         if(Vector3.Distance(gameObject.transform.position, nextPoint) < 0.1f || hasNewDestinationPoint)
         {

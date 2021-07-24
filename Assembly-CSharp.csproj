@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Pathfinding.cs" />
+    <Compile Include="Assets\Scripts\Swamp.cs" />
     <Compile Include="Assets\Scripts\MyUtils.cs" />
     <Compile Include="Assets\Scripts\GameRTSController.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />

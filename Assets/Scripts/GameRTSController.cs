@@ -8,13 +8,11 @@ public class GameRTSController : MonoBehaviour
     private Vector3 dragPosition;
     [SerializeField] LayerMask layerMask;
     private List<UnitRTS> selectedUnitsRTSList;
-    //public Vector3 orderToMovePoint;
 
     private void Awake()
     {
         selectedUnitsRTSList = new List<UnitRTS>();
         selectionBoxController = GetComponent<SelectionBoxController>();
-
     }
 
     private void Update()
@@ -39,8 +37,6 @@ public class GameRTSController : MonoBehaviour
             Box.baseMax = dragPosition;
             Collider[] colliderArray = Physics.OverlapBox(Box.Center, Box.Extents, Quaternion.identity, layerMask);
 
-            //Debug.Log("######");
-
             foreach (UnitRTS unitRTS in selectedUnitsRTSList) // deselect all Units (visualy)
             {
                 unitRTS.SetSelectedVisible(false);
@@ -49,7 +45,6 @@ public class GameRTSController : MonoBehaviour
             selectedUnitsRTSList.Clear();
             foreach (Collider collider in colliderArray) // select Units within selection area
             {
-                //Debug.Log(collider.ToString());
                 UnitRTS unitRTS = collider.GetComponent<UnitRTS>();
                 if (unitRTS != null)
                 {
@@ -58,7 +53,6 @@ public class GameRTSController : MonoBehaviour
                     selectedUnitsRTSList.Add(unitRTS);
                 }
             }
-            Debug.Log(selectedUnitsRTSList.Count.ToString());
         }
         if(selectedUnitsRTSList.Count > 0)
         {
@@ -70,7 +64,6 @@ public class GameRTSController : MonoBehaviour
                     unitRTS.hasNewDestinationPoint = true;
                     unitRTS.destinationPoint = orderToMovePoint;
                 }
-                //Debug.Log(orderToMovePoint);
             }
         }
     }

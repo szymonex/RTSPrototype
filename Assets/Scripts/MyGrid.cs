@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +7,11 @@ public class MyGrid : MonoBehaviour
     public LayerMask unwalkableMask; // serialize?
     public Vector2 gridWorldSize; // serialize?
     public float nodeRadius;
-    Node[,] grid;
+    private Node[,] grid;
 
-    float nodeDiameter;
-    int gridSizeX;
-    int gridSizeY;
+    private float nodeDiameter;
+    private int gridSizeX;
+    private int gridSizeY;
 
     private void Start()
     {
@@ -73,29 +72,5 @@ public class MyGrid : MonoBehaviour
         int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
 
         return grid[x, y];
-    }
-
-    public List<Node> path;
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-
-        if (grid != null)
-        {
-            foreach (Node n in grid)
-            {
-                Gizmos.color = (n.walkable) ? Color.white : Color.red;
-
-                if (path != null)
-                {
-                    if (path.Contains(n))
-                    {
-                        Gizmos.color = Color.black;
-                    }
-                }
-
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-            }
-        }
     }
 }

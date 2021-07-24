@@ -329,6 +329,7 @@
 "Assets/Scripts/Node.cs"
 "Assets/Scripts/Pathfinding.cs"
 "Assets/Scripts/SelectionBoxController.cs"
+"Assets/Scripts/Swamp.cs"
 "Assets/Scripts/UnitRTS.cs"
 -langversion:8.0
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,17 +5,15 @@ public class Pathfinding : MonoBehaviour
 {
     public Transform seeker;
     public Vector3 target;
-    bool isTarget = false;
     public List<Node> path;
     public List<Vector3> pathWorldPoints;
     private UnitRTS unitRTS;
+    private bool isTarget = false;
 
     [SerializeField] private MyGrid grid;
 
     private void Awake()
     {
-        //target = new Vector3();
-        //grid = GetComponent<MyGrid>();
         seeker = gameObject.transform;
         unitRTS = GetComponent<UnitRTS>();
     }
@@ -31,7 +28,6 @@ public class Pathfinding : MonoBehaviour
 
     public void SetTargetPoint(Vector3 target)
     {
-        //Vector3 targetWithY = new Vector3(target.x, 1f, target.z);
         this.target = target;
         isTarget = true;
     }
@@ -63,7 +59,7 @@ public class Pathfinding : MonoBehaviour
             if(currentNode == targetNode)
             {
                 RetracePath(startNode, targetNode);
-                isTarget = false; //
+                isTarget = false;
                 return;
             }
 
@@ -103,7 +99,6 @@ public class Pathfinding : MonoBehaviour
         path.Reverse();
 
         this.path = path;
-        grid.path = path;
         PathNodesToWorldPoints(path);
     }
 
@@ -113,7 +108,7 @@ public class Pathfinding : MonoBehaviour
         {
             pathWorldPoints.Add(node.worldPosition);
         }
-        PassPathToUnit(); ////
+        PassPathToUnit();
     }
 
     public void PassPathToUnit()
@@ -121,7 +116,7 @@ public class Pathfinding : MonoBehaviour
         unitRTS.canMove = true;
     }
 
-    int GetDistance(Node nodeA, Node nodeB) // hCost
+    int GetDistance(Node nodeA, Node nodeB)
     {
         int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
         int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
