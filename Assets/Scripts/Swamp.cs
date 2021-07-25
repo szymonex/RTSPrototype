@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class Swamp : MonoBehaviour
 {
+    [SerializeField] private float slowingParameter = 0.03f; 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Unit")
         {
             UnitRTS unitRTS = other.GetComponent<UnitRTS>();
-            unitRTS.speed -= 0.05f;
+            unitRTS.speed -= slowingParameter;
         }
     }
 
@@ -16,7 +18,7 @@ public class Swamp : MonoBehaviour
         if(other.tag == "Unit")
         {
             UnitRTS unitRTS = other.GetComponent<UnitRTS>();
-            unitRTS.speed += 0.05f;
+            unitRTS.speed += slowingParameter;
         }
     }
 }

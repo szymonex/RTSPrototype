@@ -6,7 +6,7 @@ public class UnitRTS : MonoBehaviour
     public bool hasNewDestinationPoint = false;
     public bool canMove = false;
     public Pathfinding pathfinding;
-    public float speed = 0.01f;
+    public float speed = 0.05f;
     public Vector3 offsetFroSelectionCenter;
     private Vector3 nextPoint;
     private bool isPointAchieved = true;
